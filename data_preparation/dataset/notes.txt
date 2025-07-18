@@ -1,0 +1,1 @@
+Images from sorted_data should be splitted into train/val/test data
