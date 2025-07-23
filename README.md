@@ -2,6 +2,9 @@
 
 This project focuses on classifying galaxy morphologies using image data from the Sloan Digital Sky Survey (SDSS) and labels from Galaxy Zoo 2. The pipeline includes data preparation, image processing, model training (with optional LoRA adaptation), and result evaluation.
 
+📄 **[Final Report](./galaxy-morphology-augmentation.pdf)**  
+A detailed PDF report explaining the methodology, results, and analysis behind this project.
+
 ---
 
 ## 📁 Project Structure
@@ -41,6 +44,7 @@ This project focuses on classifying galaxy morphologies using image data from th
 │   ├── galaxy_classification_eval.py   # Evaluation script
 │   └── galaxy_classification_train.py  # Training script
 │
+├── galaxy-morphology-augmentation.pdf # Final project report (added)
 └── README.md
 ```
 
