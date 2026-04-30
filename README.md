@@ -1,10 +1,38 @@
-# Galaxy Classification
+# End-to-End Deep Learning Pipeline for Galaxy Morphological Classification
 
-This project focuses on classifying galaxy morphologies utilizing image data from the Sloan Digital Sky Survey (SDSS) and crowdsourced labels from Galaxy Zoo 2. The complete pipeline encompasses data preparation, image processing, deep learning model training (with optional LoRA adaptation), and statistical result evaluation.
+[Badge: Python 3.8+] [Badge: PyTorch] [Badge: Stable Diffusion & LoRA] [Badge: Data Science]
 
-**Documentation:** A comprehensive report detailing the methodology, results, and analytical findings can be found in the [Final Report](./galaxy-morphology-augmentation.pdf).
+## Executive Summary
+This project demonstrates a complete, end-to-end machine learning workflow, from handling raw crowdsourced datasets to deploying generative AI for data augmentation, and finally performing rigorous statistical evaluation. 
+
+The pipeline classifies galaxy morphologies using image data from the Sloan Digital Sky Survey (SDSS) and Galaxy Zoo 2. A custom Convolutional Neural Network (CNN) was developed to automate classification, and various data augmentation techniques were systematically evaluated for their statistical significance. Notably, the pipeline integrates a generative AI approach, utilizing Stable Diffusion with Low-Rank Adaptation (LoRA) to explore the potential and current limitations of generative augmentation in scientific datasets.
+
+A comprehensive report detailing the methodology, physics context, and analytical findings is available in the "galaxy-morphology-augmentation.pdf" file.
+
+## Core Highlights
+* Generative AI Augmentation: Implemented a custom synthetic data generation pipeline using Stable Diffusion v1.5 fine-tuned with LoRA weights.
+* Automated Data Pipeline: Scripts to ingest, cross-reference, and preprocess raw SDSS images with complex metadata.
+* Statistical Rigor: Developed post-training evaluation scripts to test the statistical significance of various augmentation methods using the Mann-Whitney U test.
+
+## Key Results
+* Final optimized model (combining Rotation, S+S, and Flipping) achieved an overall accuracy of 83.28%.
+* Sub-class performance yielded 88.07% accuracy for non-disk galaxies and 79.19% for disk galaxies.
+* Traditional spatial augmentations showed statistically significant improvements, while texture-based augmentations (e.g., Blur, Jitter) did not.
+* Generative Augmentation Failure: The inclusion of AI-generated images resulted in a performance drop to 50.59%, equivalent to random guessing.
+
+## Detailed Analysis: Why did AI-Gen Augmentation fail?
+The poor performance of the generative augmentation approach was analyzed in detail to provide insights for future improvements:
+1. Limited Morphological Diversity: While individual synthetic images appeared visually plausible, they exhibited a lack of diversity compared to the original SDSS dataset.
+2. Mode Collapse/Averaging: Generative diffusion models tend to produce outputs clustered around an "average" representation, failing to capture the full structural spectrum of the training data, especially when using LoRA fine-tuning.
+3. Prompt Design Constraints: The use of simple, single-word captions ("disk galaxy") limited the model's ability to learn complex morphological features.
+4. Future Path: The analysis suggests that more advanced adaptation techniques like FouRA (Fourier Low Rank Adaptation) and improved descriptive prompt design could mitigate these diversity issues.
+
+<img width="600" height="360" alt="accuracies_compare_last" src="https://github.com/user-attachments/assets/0cf83f95-ed09-4d10-bc37-8a33a2f95b2b" />
+
+<img width="600" height="360" alt="ai_galaxy_examples" src="https://github.com/user-attachments/assets/25093058-5709-4667-ace6-97399cb77fe5" />
 
 ---
+**Documentation:** A comprehensive report detailing the methodology, results, and analytical findings can be found in the [Final Report](./galaxy-morphology-augmentation.pdf).
 
 ## Project Structure
 
@@ -120,7 +148,3 @@ Post-training analysis can be conducted utilizing the scripts located in the `an
 All generated logs and accuracy reports are automatically routed to the `Results/` directory.
 
 ---
-
-## Configuration Notes
-
-Before execution, please verify all file paths and hyperparameters within the scripts. Depending on your local environment and hardware constraints, these parameters may require manual adjustment.
